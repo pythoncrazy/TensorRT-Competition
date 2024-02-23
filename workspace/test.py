@@ -3,12 +3,25 @@ import torch
 
 model_id = "stabilityai/stable-diffusion-2"
 
-# Use the Euler scheduler here instead
-scheduler = EulerDiscreteScheduler.from_pretrained(model_id, subfolder="scheduler")
-pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, revision="fp16", torch_dtype=torch.float16)
+pipe = StableDiffusionPipeline.from_pretrained(
+    model_id,
+    custom_pipeline="stable_diffusion_tensorrt_txt2img",
+    # revision="fp16",
+    torch_dtype=torch.float16,
+    scheduler=scheduler,
+)
+
+# re-use cached folder to save ONNX models and TensorRT Engines
+cache_dir = os.path.basename(model_id) + '_cached_trt'
+os.makedirs(cache_dir, exist_ok=True)
+print(f'cached dir: {cache_dir}')
+pipe.set_cached_folder(
+    cache_dir,
+    revision="fp16",
+)
+
 pipe = pipe.to("cuda")
 
-prompt = "a photo of an astronaut riding a horse on mars"
-image = pipe(prompt, height=768, width=768).images[0]
-    
-image.save("astronaut_rides_horse.png")
+prompt = "a beautiful photograph of Mt. Fuji during cherry blossom"
+image = pipe(prompt).images[0]
+image.save("tensorrt_mt_fuji.png")
