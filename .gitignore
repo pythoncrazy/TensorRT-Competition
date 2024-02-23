@@ -3,6 +3,16 @@ TensorRT
 
 
 # Auto-Generated .gitignore
+# VSCode
+.vscode/*
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+# Python
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
