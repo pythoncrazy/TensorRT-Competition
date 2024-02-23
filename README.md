@@ -1,2 +1,2 @@
 # TensorRT-Competition
- Pinak Paliwal's submission to the NVIDIA TensorRT competition
+Pinak Paliwal's submission to the NVIDIA TensorRT competition
