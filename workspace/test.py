@@ -1,4 +1,5 @@
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
+import torch 
 
 model_id = "stabilityai/stable-diffusion-2"
 
